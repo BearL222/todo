@@ -2,62 +2,29 @@ angular.module('starter.services')
 .factory('Tasks', function() {
 	return {
 		all: function(i) {
-			if(i==0){
-				var taskString = window.localStorage['tasks_undone'];
-
-			}else{
-				var taskString = window.localStorage['tasks_done'];
-			}
-			if(taskString) {
-				return angular.fromJson(taskString);
-			}
+			var taskString = window.localStorage[this.getTasks(i)];
+			if(taskString) return angular.fromJson(taskString);
 			return [];
 		},
 
-		save: function(task) {
+		save: function(task,i) {
 			var tasks = [];
-			var taskString = window.localStorage['tasks_undone'];
-			if(taskString) {
-				tasks = angular.fromJson(taskString);
-			}
+			var taskString = window.localStorage[this.getTasks(i)];
+			if(taskString) tasks = angular.fromJson(taskString);
 			tasks.push(task);
-			window.localStorage['tasks_undone'] = angular.toJson(tasks);
+			window.localStorage[this.getTasks(i)] = angular.toJson(tasks);
 		},
 
-		complete:function(item,i){
+		remove:function(item,idx,i){
 			var tasks = [];
-			if(i==0){
-				var taskString = window.localStorage['tasks_done'];
-				if(taskString) {
-					tasks = angular.fromJson(taskString);
-				}
-				tasks.push(item);
-				window.localStorage['tasks_done'] = angular.toJson(tasks);
-			}else{
-				var taskString = window.localStorage['tasks_undone'];
-				if(taskString) {
-					tasks = angular.fromJson(taskString);
-				}
-				tasks.push(item)
-				window.localStorage['tasks_undone'] = angular.toJson(tasks);
-			}
+			var taskString = window.localStorage[this.getTasks(i)];
+			if(taskString) tasks = angular.fromJson(taskString);
+			tasks.splice(idx,1);
+			window.localStorage[this.getTasks(i)] = angular.toJson(tasks);
 		},
 
-		remove:function(item,i){
-			var tasks = [];
-			if(i==0) var taskString = window.localStorage['tasks_undone'];
-			else var taskString = window.localStorage['tasks_done'];
-			if(taskString) {
-				tasks = angular.fromJson(taskString);
-			}
-			for( var j=0;j<tasks.length;j++){
-				if(tasks[j].title===item.title){
-					tasks.splice(j,1);
-					break;
-				}
-			}
-			if(i==0) window.localStorage['tasks_undone'] = angular.toJson(tasks);
-			else window.localStorage['tasks_done'] = angular.toJson(tasks);
-		},
+		getTasks:function(i){
+			return i==0 ? 'tasks_undone':'tasks_done';
+		}
 	}
 })

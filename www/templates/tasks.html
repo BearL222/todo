@@ -1,8 +1,4 @@
 <ion-view view-title="Todo">
-    <style>
-    .divcss5_1{text-decoration: line-through}
-    </style>
-
     <ion-nav-buttons side="right">
         <!--create button here-->
         <button class="button button-icon" ui-sref="create">
@@ -16,27 +12,23 @@
             <!--undone iteam-->
             <ion-item ng-repeat="item in tasks_undone">
                 {{item.title}}
-            <ion-option-button class="button-positive"
-                                    ng-click="complete(item,0)">
-                Complete
-            </ion-option-button>
-            <ion-option-button class="button-assertive"
-                                    ng-click="remove(item,0)">
-                Delete
-            </ion-option-button>
+                <ion-option-button class="button-positive" ng-click="complete(item,0)">
+                    Complete
+                </ion-option-button>
+                <ion-option-button class="button-assertive" ng-click="remove(item,0)">
+                    Delete
+                </ion-option-button>
             </ion-item>
 
             <!--done item-->
             <ion-item ng-repeat="item in tasks_done">
-                <div class="divcss5_1">{{item.title}}</div>
-            <ion-option-button class="button-positive"
-                                    ng-click="complete(item,1)">
-                Uncomplete
-            </ion-option-button>
-            <ion-option-button class="button-assertive"
-                                    ng-click="remove(item,1)">
-                Delete
-            </ion-option-button>
+                <S>{{item.title}}</S>
+                <ion-option-button class="button-positive" ng-click="complete(item,1)">
+                    Uncomplete
+                </ion-option-button>
+                <ion-option-button class="button-assertive" ng-click="remove(item,1)">
+                    Delete
+                </ion-option-button>
             </ion-item>
         </ion-list>
     </ion-content>
